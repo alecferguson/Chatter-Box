@@ -10,7 +10,6 @@ dotenv.config(); // Enabling ENV
 
 // Creating express app and setting port
 const app = express()
-
 const PORT = process.env.PORT || 8000
 
 // Middleware

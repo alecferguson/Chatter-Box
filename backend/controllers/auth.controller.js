@@ -14,56 +14,62 @@ export const signup = async (req, res) => {
 		}
 
         // Checking for exisisting user
-        const existingUser = await User.findOne({username})
-        if(existingUser) {
-            return res.status(400).json({ error: "Username already in use" })
-        }
+        const existingUser = await User.findOne({ username });
+		if (existingUser) {
+			return res.status(400).json({ error: "Username is already taken" });
+		}
 
         // Checking for exisiting email
-        const existingEmail = await User.findOne({email})
-        if(existingEmail) {
-            return res.status(400).json({ error: "Email is already in use" })
-        }
+        const existingEmail = await User.findOne({ email })
+		if (existingEmail) {
+			return res.status(400).json({ error: "Email is already taken" })
+		}
+        //Pasword length check
+        if (password.length < 6) {
+			return res.status(400).json({ error: "Password must be at least 6 characters long" });
+		}
 
         // Hashing password
         const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password, salt)
+		const hashedPassword = await bcrypt.hash(password, salt)
 
         // Creating User object
         const newUser = new User({
-            fullName,
-            username,
-            email,
-            password: hashedPassword,
-        })
+			fullName,
+			username,
+			email,
+			password: hashedPassword,
+		})
 
         // JWT Token
-        if(newUser) {
-            generateTokenAndSetCookie(newUser._id, res) //in lib\utils
-            await newUser.save()
-            res.status(201).json({
-                _id: newUser._id,
-                fullName: newUser.fullName,
-                username: newUser.username,
-                email: newUser.email,
-                followers: newUser.followers,
-                foillowing: newUser.following,
-                profileImg: newUser.profileImg,
-                coverImg: newUser.coverImg,
-            })
-        } else {
-            res.status(400).json({error: "Invalid user data"})
-        }
-    } catch (error) {
-        console.log("Error in signup controller")
-        res.status(500).json({error: "Server error"})
-    }
+        if (newUser) {
+			generateTokenAndSetCookie(newUser._id, res);
+			await newUser.save();
+			res.status(201).json({
+				_id: newUser._id,
+				fullName: newUser.fullName,
+				username: newUser.username,
+				email: newUser.email,
+				followers: newUser.followers,
+				following: newUser.following,
+				profileImg: newUser.profileImg,
+				coverImg: newUser.coverImg,
+			});
+		} else {
+			res.status(400).json({ error: "Invalid user data" });
+		}
+	} catch (error) {
+		console.log("Error in signup controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+	}
 }
+
 export const login = async (req, res) => {
     res.json({
         data: "You hit the login endpoint"
     })
 }
+
 export const logout = async (req, res) => {
     res.json({
         data: "You hit the logout endpoint"
