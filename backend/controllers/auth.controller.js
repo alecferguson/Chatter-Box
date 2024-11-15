@@ -8,7 +8,7 @@ export const signup = async (req, res) => {
         const {fullName, username, email, password} = req.body
 
         // Email Regex (Review)
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(email)) {
 			return res.status(400).json({ error: "Invalid email format" })
 		}
@@ -34,12 +34,12 @@ export const signup = async (req, res) => {
             fullName,
             username,
             email,
-            password:hashedPassword,
+            password: hashedPassword,
         })
 
         // JWT Token
         if(newUser) {
-            generateTokenAndSetCookie(newUser._id,res) //in lib\utils
+            generateTokenAndSetCookie(newUser._id, res) //in lib\utils
             await newUser.save()
             res.status(201).json({
                 _id: newUser._id,

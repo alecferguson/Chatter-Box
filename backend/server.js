@@ -12,8 +12,10 @@ dotenv.config(); // Enabling ENV
 const app = express()
 
 const PORT = process.env.PORT || 8000
+
 // Middleware
 app.use(express.json()) //Parse req.body
+app.use(express.urlencoded({ extended: true})) //Used for postman
 // AUTH Route
 app.use("/api/auth", authRoutes)
 
