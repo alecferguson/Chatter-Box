@@ -1,9 +1,10 @@
 import express from "express"
+import { getMe,signup,login,logout } from "../controllers/auth.controller.js"
+import { protectRoute } from "../middleware/protectRoute.js"
+//opening router
 const router = express.Router()
-import { signup,login,logout } from "../controllers/auth.controller.js" // Imported from controller
 // Broken down to controller
-
-//router.get("/me", protectRoute, getMe)
+router.get("/me", protectRoute, getMe) //calls protect route function first then runs getMe
 
 router.post("/signup", signup)
 
