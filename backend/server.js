@@ -1,16 +1,21 @@
 // Importing dependencies
 import express from "express"
 import dotenv from "dotenv"
-import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser"
+import {v2 as cloudinary} from "cloudinary"
 // Importing routes
 import authRoutes from "./routes/auth.routes.js"
 import userRoutes from "./routes/user.routes.js"
-
+import postRoutes from "./routes/user.routes.js"
 // Mongo DB Connection
 import connectMongoDB from "./db/connectMongoDB.js"
-// Enabling ENV
-dotenv.config();
-
+// Enabling ENV & configs
+dotenv.config()
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+})
 // Creating express app and setting port
 const app = express()
 const PORT = process.env.PORT || 8000
@@ -19,9 +24,10 @@ const PORT = process.env.PORT || 8000
 app.use(express.json()) // Parse req.body
 app.use(express.urlencoded({ extended: true})) // Used for postman
 app.use(cookieParser()) // Used for protectRoute
-// AUTH Route
+// Routes
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
+app.use("/api/posts", postRoutes)
 // Listening for port & connecting to mongoDB
 console.log(process.env.MONGO_URI)
 app.listen(PORT, () => {
