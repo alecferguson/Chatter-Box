@@ -7,6 +7,7 @@ import {v2 as cloudinary} from "cloudinary"
 import authRoutes from "./routes/auth.route.js"
 import userRoutes from "./routes/user.route.js"
 import postRoutes from "./routes/post.route.js"
+import notificationRoutes from "./routes/notification.route.js"
 // Mongo DB Connection
 import connectMongoDB from "./db/connectMongoDB.js"
 // Enabling ENV & configs
@@ -28,6 +29,7 @@ app.use(cookieParser()) // Used for protectRoute
 app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/posts", postRoutes)
+app.use("/api/notifications", notificationRoutes)
 // Listening for port & connecting to mongoDB
 console.log(process.env.MONGO_URI)
 app.listen(PORT, () => {
