@@ -7,9 +7,7 @@ import { BrowserRouter } from "react-router-dom"
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<QueryClientProvider client={queryClient}>
-				<App />
-			</QueryClientProvider>
+			<App />
 		</BrowserRouter>
 	</React.StrictMode>
 );
