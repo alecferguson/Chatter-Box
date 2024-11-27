@@ -1,6 +1,8 @@
 import Post from "./Post";
 import PostSkeleton from "../skeletons/PostSkeleton";
 import { POSTS } from "../../utils/db/dummy";
+import { useEffect } from "react";
+
 
 const Posts = ({ feedType, username, userId }) => {
   const getPostEndpoint = () => {
@@ -15,9 +17,9 @@ const Posts = ({ feedType, username, userId }) => {
   };
   const isLoading = false;
   // Also wrote a bit of this because it's needed for the Profile Page Section - Clara
-  useEffect(() => {
+  /*useEffect(() => {
     refetch();
-  }, [username]);
+  }, [username]);*/
 
   return (
     <>
