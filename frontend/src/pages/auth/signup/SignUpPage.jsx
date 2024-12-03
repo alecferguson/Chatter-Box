@@ -27,15 +27,17 @@ const SignUpPage = () => {
         body: JSON.stringify({email, username, fullName, password}),
       });
 
-      if(!res.ok) throw new Error("Something went wrong");
       const data = await res.json(); 
-      if(data.error) throw new Error(data.error); 
+      if(!res.ok) throw new Error("Something went wrong" || "Failed to create account");
       console.log(data);
       return data; 
     } catch (error) {
         console.error(error); 
-        toast.error(error.message); 
+        throw error;  
     }
+  },
+  onSuccess: () => {
+    toast.success("Account created successfully"); 
   },
  });
   
