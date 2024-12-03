@@ -9,8 +9,9 @@ import ProfilePage from "./pages/profile/ProfilePage.jsx";
 import { Toaster } from "react-hot-toast"; 
 
 function App() {
-  const { data, isLoading, error, isError} = useQuery({
-    queryKey: ['authUser'],
+  const { data:authUser, isLoading} = useQuery({
+    //we use queryKey to give a unique name to our query and refer to it later
+    queryKey: ["authUser"],
     queryFn: async() => {
       try {
         const res = await fetch("/api/auth/me");
@@ -24,7 +25,8 @@ function App() {
       } catch (error) {
 
       }
-    }
+    },
+    retry:false,
   });
 
   if(isLoading) {
@@ -39,11 +41,11 @@ function App() {
     <div className="flex max-w-6xl mx-auto">
       <Sidebar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/notifications" element={<NotificationPage />} />
-        <Route path="/profile/:username" element={<ProfilePage />} />
+        <Route path="/" element={authUser ? <HomePage /> : <Navigate to='/login' />} />
+        <Route path="/signup" element={!authuser ? <SignUpPage /> : <Navigate to='/' />} />
+        <Route path="/login" element={!authuser ? <LoginPage /> : <Navigate to='/' />} />
+        <Route path="/notifications" element={authUser ? <NotificationPage /> : <Navigate to='/login' />} />
+        <Route path="/profile/:username" element={authUser ? <ProfilePage /> : <Navigate to='/login' />} />
       </Routes>
       <RightPanel />
       <Toaster />
