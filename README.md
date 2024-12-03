@@ -5,3 +5,4 @@
 5. "npm run dev" at root (\Chatter-Box\) will run the backend
 6. "npm run dev" at frontend (\Chatter-Box\frontend) will run the frontend
 7. It is recommended to run two terminals at the same time, see timestamp (3:31:20) in the video
+8. hello
