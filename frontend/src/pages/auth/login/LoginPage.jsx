@@ -14,6 +14,7 @@ const LoginPage = () => {
     username: "",
     password: "",
   });
+const queryClient = useQueryClient(); 
 
 const {
         mutate:loginMutation, 
@@ -41,7 +42,8 @@ const {
    } 
   },
   onSuccess: () => {
-    toast.success("Login successful");
+    //refetch the authUser
+    queryClient.invalidateQueries({queryKey: ["authUser"]});
   },
 });
 

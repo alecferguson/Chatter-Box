@@ -8,7 +8,7 @@ import { BiLogOut } from "react-icons/bi";
 import { useMutation } from '@tanstack/react-query'; 
 
 const Sidebar = () => {
-
+  const queryClient = useQueryClient();
   const {mutate:logout, isPending, isError, error} = useMutation({
     mutationFn: async() => {
       try {
@@ -26,8 +26,8 @@ const Sidebar = () => {
       }
     },
     onSuccess: () => {
-      toast.success("Logout successful"); 
-    }
+      queryClient.invalidateQueries({ queryKey: ["authUser" ]});
+    },
   });
 
   const data = {
